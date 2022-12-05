@@ -1,4 +1,5 @@
 <h2 align="center"> dummy-lib </h2>
+
 ### Layout
 
 ```text
@@ -41,7 +42,7 @@
 
 #### Available Scripts
 
-In this project directory, you can run:
+In this project directory, you can run:  
 `yarn`  
 install dependencies
 
@@ -65,5 +66,5 @@ skip `git commit` hooks. In general, Don't do this! If you think one file should
 
 #### Userful Resources
 
-[Vue3](https://vuejs.org/guide/introduction.html)
+[Vue3](https://vuejs.org/guide/introduction.html)  
 [electron](https://www.electronjs.org/docs/latest)
