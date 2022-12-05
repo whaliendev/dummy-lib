@@ -1,71 +1,67 @@
-# electron-vite-vue
-
-🥳 Really simple `Electron` + `Vue` + `Vite` boilerplate.
-
-<!-- [![awesome-vite](https://awesome.re/mentioned-badge.svg)](https://github.com/vitejs/awesome-vite) -->
-<!-- [![Netlify Status](https://api.netlify.com/api/v1/badges/ae3863e3-1aec-4eb1-8f9f-1890af56929d/deploy-status)](https://app.netlify.com/sites/electron-vite/deploys) -->
-<!-- [![GitHub license](https://img.shields.io/github/license/caoxiemeihao/electron-vite-vue)](https://github.com/electron-vite/electron-vite-vue/blob/main/LICENSE) -->
-<!-- [![GitHub stars](https://img.shields.io/github/stars/caoxiemeihao/electron-vite-vue?color=fa6470)](https://github.com/electron-vite/electron-vite-vue) -->
-<!-- [![GitHub forks](https://img.shields.io/github/forks/caoxiemeihao/electron-vite-vue)](https://github.com/electron-vite/electron-vite-vue) -->
-[![GitHub Build](https://github.com/electron-vite/electron-vite-vue/actions/workflows/build.yml/badge.svg)](https://github.com/electron-vite/electron-vite-vue/actions/workflows/build.yml)
-[![GitHub Discord](https://img.shields.io/badge/chat-discord-blue?logo=discord)](https://discord.gg/sRqjYpEAUK)
-
-## Features
-
-📦 Out of the box  
-🎯 Based on the official [template-vue-ts](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-vue-ts), less invasive  
-🌱 Extensible, really simple directory structure  
-💪 Support using Node.js API in Electron-Renderer  
-🔩 Support C/C++ native addons  
-🖥 It's easy to implement multiple windows  
-
-## Quick Start
-
-```sh
-npm create electron-vite
+<h2 align="center"> dummy-lib </h2>
+### Layout
+```text
+.
+├── dist
+├── dist-electron
+├── electron
+├── electron-builder.json
+├── index.html
+├── LICENSE
+├── package.json
+├── public
+├── README.md
+├── release
+├── src
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+└── yarn.lock
 ```
+| filename | what |
+| :-----| :---- |
+| `dist` | build files of web app |
+| `dist-electron` | build files of electron app |
+| `electron` | source code of electron-related code |
+| `electron-builder.json` | the config files of elctron-builder makers |
+| `index.html` | entrypoint of vite server |
+| `LICENSE` | the license we used in this proj | 
+| `package.json` | npm dep manifest |
+| `public` | static resources |
+| `README.md` | the file you are reading |
+| `release` | output dir of electron-build | 
+| `src` | source code of vue web app |
+| `tsconfig.json, tsconfig.json` | ts config files |
+| `vite.config.json` | vite config file |
+| `yarn.lock` | pin the version of deps |
 
-<!-- [![quick-start](https://asciinema.org/a/483731.svg)](https://asciinema.org/a/483731) -->
+### Getting Started
 
-![electron-vite-vue.gif](https://github.com/electron-vite/electron-vite-vue/blob/main/public/electron-vite-vue.gif?raw=true)
+#### Available Scripts
 
-## Debug
+In this project directory, you can run:
+`yarn`
+install dependencies
 
-![electron-vite-react-debug.gif](https://github.com/electron-vite/electron-vite-react/blob/main/public/electron-vite-react-debug.gif?raw=true)
+`yarn prepare`
+install git hooks
 
-## Directory
+`yarn dev`
+open a HMR dev server to reflect the code changes
 
-```diff
-+ ├─┬ electron
-+ │ ├─┬ main
-+ │ │ └── index.ts    entry of Electron-Main
-+ │ └─┬ preload
-+ │   └── index.ts    entry of Preload-Scripts
-  ├─┬ src
-  │ └── main.ts       entry of Electron-Renderer
-  ├── index.html
-  ├── package.json
-  └── vite.config.ts
-```
+`yarn build`
+build electron app, output the binaries to `release` folder
 
-## Be aware
+`yarn lint`
+show the lint messages
 
-🚨 By default, this template integrates Node.js in the Renderer process. If you don't need it, you just remove the option below. [Because it will modify the default config of Vite](https://github.com/electron-vite/vite-plugin-electron/tree/main/packages/electron-renderer#config-presets-opinionated).
+`yarn lint:fix`
+fix the errors and warnings reported by eslint. Typically, you don't need to call this script, as it's configured as a git commit hooks already.
 
-```diff
-# vite.config.ts
+`git commit --no-verify`
+skip `git commit` hooks. In general, Don't do this! If you think one file should not be linted, just ignore it in `.eslintignore`.
 
-export default {
-  plugins: [
--   // Use Node.js API in the Renderer-process
--   renderer({
--     nodeIntegration: true,
--   }),
-  ],
-}
-```
+#### Userful Resources
 
-## FAQ
-
-- [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron-renderer#dependencies-vs-devdependencies)
-- [C/C++ addons, Node.js modules - Pre-Bundling](https://github.com/electron-vite/vite-plugin-electron-renderer#dependency-pre-bundling)
+[Vue3](https://vuejs.org/guide/introduction.html)
+[electron](https://www.electronjs.org/docs/latest)
