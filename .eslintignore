@@ -1,0 +1,5 @@
+dist
+dist-electron
+vite.config.ts
+.vscode
+package.json
