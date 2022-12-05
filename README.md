@@ -67,4 +67,6 @@ skip `git commit` hooks. In general, Don't do this! If you think one file should
 #### Userful Resources
 
 [Vue3](https://vuejs.org/guide/introduction.html)  
+[Pinia](https://pinia.vuejs.org/)  
+[Vue Router](https://router.vuejs.org/)  
 [electron](https://www.electronjs.org/docs/latest)
