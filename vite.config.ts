@@ -5,6 +5,10 @@ import vue from '@vitejs/plugin-vue'
 import electron from 'vite-plugin-electron'
 import pkg from './package.json'
 
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { TDesignResolver } from 'unplugin-vue-components/resolvers'
+
 rmSync('dist-electron', { recursive: true, force: true })
 const sourcemap = !!process.env.VSCODE_DEBUG
 const isBuild = process.argv.slice(2).includes('build')
@@ -57,6 +61,16 @@ export default defineConfig({
     // renderer({
     //   nodeIntegration: true,
     // }),
+    AutoImport({
+      resolvers: [TDesignResolver({
+        library: 'vue-next'
+      })],
+    }),
+    Components({
+      resolvers: [TDesignResolver({
+        library: 'vue-next'
+      })],
+    }),
   ],
   server: process.env.VSCODE_DEBUG
     ? (() => {
