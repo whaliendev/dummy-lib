@@ -2,6 +2,17 @@
 @import './mixin.scss';
 @import './transition.scss';
 
+*,
+*::before, 
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --w-font-family: PingFang SC, Microsoft YaHei, Arial Regular;
+  --w-font-family-medium: PingFang SC, Microsoft YaHei, Arial Medium;
+}
+
 body {
   font-size: 1em;
   font-weight: 400;
