@@ -30,7 +30,6 @@ const searchIcon = ref(() => h(SearchIcon))
 .searchbox-container {
   display: flex;
   justify-content: space-between;
-  width: 60%;
 
   :deep(.t-input-adornment) {
     max-width: 100%;

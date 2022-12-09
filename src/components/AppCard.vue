@@ -12,7 +12,7 @@ export default defineComponent({
       type: String,
       required: false,
       default: 'noradius',
-      validator: val => (['base', 'small', 'round', 'noradius'] as any[]).includes(val),
+      validator: val => (['base', 'small', 'medium', 'large', 'round', 'noradius'] as any[]).includes(val),
     },
   },
 })
@@ -41,7 +41,15 @@ export default defineComponent({
   border-radius: var(--td-radius-small);
 }
 
+.base-card.large {
+  border-radius: var(--td-radius-large);
+}
+
 .base-card.round {
   border-radius: var(--td-radius-round);
+}
+
+.base-card.medium {
+  border-radius: var(--td-radius-medium);
 }
 </style>
