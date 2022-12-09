@@ -61,11 +61,13 @@ export default defineConfig({
     // renderer({
     //   nodeIntegration: true,
     // }),
+    // auto import APIs on demand
     AutoImport({
       resolvers: [TDesignResolver({
         library: 'vue-next'
       })],
     }),
+    // auto import components and register for it
     Components({
       resolvers: [TDesignResolver({
         library: 'vue-next'
