@@ -1,11 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
-
-const constantRoutes: RouteRecordRaw[] = []
+import routeRecords from './route-records'
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: constantRoutes,
+  routes: routeRecords,
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+      }
+    }
+    else if (savedPosition) {
+      return savedPosition
+    }
+    else {
+      return {
+        top: 0,
+      }
+    }
+  },
 })
 
 export default router

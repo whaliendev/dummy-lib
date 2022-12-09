@@ -7,8 +7,15 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AccountForm: typeof import('./src/components/AccountForm.vue')['default']
+    AdminHome: typeof import('./src/components/AdminHome/index.vue')['default']
+    AdminNavMenu: typeof import('./src/components/NavMenu/AdminNavMenu.vue')['default']
+    AppCard: typeof import('./src/components/AppCard.vue')['default']
+    NavMenu: typeof import('./src/components/NavMenu/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchBox: typeof import('./src/components/SearchBox.vue')['default']
+    UserHome: typeof import('./src/components/UserHome/index.vue')['default']
+    UserNavMenu: typeof import('./src/components/NavMenu/UserNavMenu.vue')['default']
   }
 }

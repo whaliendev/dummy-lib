@@ -1,6 +1,11 @@
 <script lang="ts" setup>
+
 </script>
 
 <template>
-  <router-view />
+  <header />
 </template>
+
+<style lang="scss" scoped>
+
+</style>
