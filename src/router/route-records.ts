@@ -79,6 +79,7 @@ const routeRecords: Array<NamedRouteRecordRaw> = [
     name: 'login-to',
     path: '/login/to/:dest',
     component: LoginLayout,
+    props: true,
   },
 ]
 
