@@ -10,7 +10,7 @@ import BranchAdmin from '@/views/admin-view/BranchAdmin.vue'
 import DocumentBorrowed from '@/views/user-view/DocumentBorrowed.vue'
 import DocumentReserved from '@/views/user-view/DocumentReserved.vue'
 
-type NamedRouteRecordRaw = WithRequired<RouteRecordRaw, 'name'>
+export type NamedRouteRecordRaw = WithRequired<RouteRecordRaw, 'name'>
 
 const routeRecords: Array<NamedRouteRecordRaw> = [
   {
