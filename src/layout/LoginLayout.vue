@@ -14,9 +14,9 @@ const loginStatus = ref<boolean>(false)
 watch(loginStatus, (success) => {
   if (success) {
     if (props.dest)
-      router.push({ name: props.dest })
+      router.push({ name: props.dest, replace: true })
     else
-      router.push({ name: 'home' })
+      router.push({ name: 'home', replace: true })
   }
 })
 </script>
