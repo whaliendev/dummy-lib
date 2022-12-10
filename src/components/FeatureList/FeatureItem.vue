@@ -47,7 +47,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <t-popup :content="hintMsg" hide-empty-popup placement="top" trigger="hover">
+  <t-tooltip :content="hintMsg" hide-empty-popup placement="top" trigger="hover">
     <router-link :to="to">
       <component :is="featureIcon" size="2.2em" />
       <p>
@@ -56,7 +56,7 @@ export default defineComponent({
         </slot>
       </p>
     </router-link>
-  </t-popup>
+  </t-tooltip>
 </template>
 
 <style lang="scss" scoped>
