@@ -10,8 +10,11 @@ import BranchAdmin from '@/views/admin-view/BranchAdmin.vue'
 import DocumentBorrowed from '@/views/user-view/DocumentBorrowed.vue'
 import DocumentReserved from '@/views/user-view/DocumentReserved.vue'
 
-const routeRecords: Array<RouteRecordRaw> = [
+type NamedRouteRecordRaw = WithRequired<RouteRecordRaw, 'name'>
+
+const routeRecords: Array<NamedRouteRecordRaw> = [
   {
+    name: 'root',
     path: '/',
     component: HeaderLayout,
     children: [
