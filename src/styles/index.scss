@@ -1,16 +1,22 @@
+@import './keyframes.scss';
 @import './variables.scss';
 @import './mixin.scss';
 @import './transition.scss';
 
 *,
-*::before, 
+*::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
 :root {
-  --w-font-family: PingFang SC, Microsoft YaHei, Arial Regular;
-  --w-font-family-medium: PingFang SC, Microsoft YaHei, Arial Medium;
+  --w-header-height: 48px;
 }
 
 body {
@@ -20,4 +26,13 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: antialiased;
+}
+
+.wrap,
+.wrap-out {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  max-height: 100vh;
+  transition: all 1s;
 }
