@@ -18,7 +18,7 @@ const searchIcon = ref(() => h(SearchIcon))
 <template>
   <div class="searchbox searchbox-container">
     <t-input-adornment :prepend="categorySelect">
-      <t-input placeholder="输入内容以开始搜索" autocomplete="on" autofocus size="large" type="search" />
+      <t-input placeholder="输入内容以开始搜索" autocomplete="on" size="large" type="search" />
     </t-input-adornment>
     <t-button :icon="searchIcon" size="large">
       搜索
