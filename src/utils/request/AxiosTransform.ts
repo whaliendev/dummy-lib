@@ -1,4 +1,4 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { RequestOptions, Result } from '@/types/axios'
 
 // 创建Axios选项
@@ -13,8 +13,6 @@ export interface CreateAxiosOptions extends AxiosRequestConfig {
 
 // Axios 数据处理
 export abstract class AxiosTransform {
-  axiosInstance?: AxiosInstance
-
   // 请求前Hook
   beforeRequestHook?: (config: AxiosRequestConfig, options: RequestOptions) => AxiosRequestConfig
 

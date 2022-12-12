@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { stringify } from 'qs'
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { MessagePlugin } from 'tdesign-vue-next'
 import { cloneDeep, isFunction } from '../utils'
 import type { CreateAxiosOptions } from './AxiosTransform'
 import { AxiosCanceler } from './AxiosCancel'
-import type { AxiosRequestConfigRetry, RequestOptions, Result } from '@/types/axios'
+import type { AxiosRequestConfigRetry, ErrorResult, RequestOptions, Result } from '@/types/axios'
 
 // Axios模块
 export class VAxios {
@@ -18,8 +19,6 @@ export class VAxios {
     this.options = options
     this.instance = axios.create(options)
     this.setupInterceptors()
-    if (options.transform)
-      options.transform.axiosInstance = this.instance
   }
 
   // 创建axios句柄
@@ -142,6 +141,7 @@ export class VAxios {
 
     const opt: RequestOptions = { ...requestOptions, ...options }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { beforeRequestHook, requestCatchHook, transformResponseHook } = transform || {}
     if (beforeRequestHook && isFunction(beforeRequestHook))
       conf = beforeRequestHook(conf, opt)
@@ -152,28 +152,35 @@ export class VAxios {
 
     return new Promise((resolve, reject) => {
       this.instance
-        .request<any, AxiosResponse<Result>>(!config.retryCount ? conf : config)
-        .then((res: AxiosResponse<Result>) => {
-          if (transformResponseHook && isFunction(transformResponseHook)) {
-            try {
-              const ret = transformResponseHook(res, opt)
-              resolve(ret)
+        .request<any, AxiosResponse<Result<T>>>(!config.retryCount ? conf : config)
+        .then((res: AxiosResponse<Result<T>>) => {
+          if (res) { // skip retry
+            if (transformResponseHook && isFunction(transformResponseHook)) {
+              try {
+                const ret = transformResponseHook(res, opt)
+                resolve(ret)
+              }
+              catch (err) {
+                reject(err || new Error('糟糕，接口请求失败了'))
+              }
             }
-            catch (err) {
-              reject(err || new Error('请求错误!'))
-            }
-            return
+            resolve(res as unknown as Promise<T>)
           }
-          resolve(res as unknown as Promise<T>)
         })
-        .catch((e: Error | AxiosError) => {
-          if (requestCatchHook && isFunction(requestCatchHook)) {
-            reject(requestCatchHook(e, opt))
-            return
-          }
+        .catch((e: Error | AxiosError<Result<T>>) => {
+          let haveWarned = false
           if (axios.isAxiosError(e)) {
-            // 在这里重写Axios的错误信息
+            const { response } = e as AxiosError
+            if (response) {
+              const { data } = response
+              if (conf.requestOptions?.errorWarning) {
+                MessagePlugin.error((data as ErrorResult).reason || '糟糕，请求接口失败了')
+                haveWarned = true
+              }
+            }
           }
+          if (conf.requestOptions?.errorWarning && !haveWarned)
+            MessagePlugin.error((e as Error).message)
           reject(e)
         })
     })

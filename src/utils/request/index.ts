@@ -1,11 +1,12 @@
 // axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
+import type { AxiosRequestConfig } from 'axios'
 import { isString, merge } from '../utils'
 import type { AxiosTransform, CreateAxiosOptions } from './AxiosTransform'
 import { VAxios } from './Axios'
 import { formatRequestDate, joinTimestamp, setObjToUrlParams } from './utils'
+import type { AxiosRequestConfigRetry } from '@/types/axios'
 import proxy from '@/config/proxy'
 import { TOKEN_NAME } from '@/config/global'
-import type { AxiosRequestConfigRetry } from '@/types/axios'
 
 const env = import.meta.env.MODE || 'development'
 
@@ -14,7 +15,6 @@ const host = env === 'mock' || !proxy.isRequestProxy ? '' : (proxy[env as keyof 
 
 // 数据处理，方便区分多种处理方式
 const transform: AxiosTransform = {
-  // 处理响应数据。如果数据不是预期格式，可直接抛出错误
   transformResponseHook: (res, options) => {
     const { isTransformResponse, isReturnNativeResponse } = options
 
@@ -38,16 +38,15 @@ const transform: AxiosTransform = {
       throw new Error('请求接口错误')
 
     //  这里 code为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code } = data
+    const { reason } = data
 
     // 这里逻辑可以根据项目进行修改
-    const hasSuccess = data && code === 0
+    const hasSuccess = !(reason && reason.length)
     if (hasSuccess)
-      return data.data
+      return res.data
 
-    throw new Error(`请求接口错误, 错误码: ${code}`)
+    throw new Error(`请求接口错误, 错误原因: ${reason}`)
   },
-
   // 请求前处理配置
   beforeRequestHook: (config, options) => {
     const { apiUrl, isJoinPrefix, urlPrefix, joinParamsToUrl, formatDate, joinTime = true } = options
@@ -67,7 +66,7 @@ const transform: AxiosTransform = {
       formatRequestDate(data)
 
     if (config.method?.toUpperCase() === 'GET') {
-      if (!isString(params)) {
+      if (!isString(params)) { // URLSearchParams
         // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
         config.params = Object.assign(params || {}, joinTimestamp(joinTime, false))
       }
@@ -107,7 +106,7 @@ const transform: AxiosTransform = {
 
   // 请求拦截器处理
   requestInterceptors: (config, options) => {
-    // 请求之前处理config
+    // 请求之前处理localStorage里的token，注意TOKEN_NAME应该为token的路径
     const token = localStorage.getItem(TOKEN_NAME)
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
@@ -140,10 +139,14 @@ const transform: AxiosTransform = {
     const backoff = new Promise((resolve) => {
       setTimeout(() => {
         resolve(config)
-      }, config.requestOptions.retry.delay || 1)
+      }, config.requestOptions.retry.delay || 100)
     })
     config.headers = { ...config.headers, 'Content-Type': 'application/json;charset=UTF-8' }
-    return backoff.then(config => this.axiosInstance?.request(config as AxiosRequestConfigRetry))
+    return backoff.then((config) => {
+      // the following request will be binded to axiosInstance, aso the following line is safe
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      request.request(config as AxiosRequestConfigRetry, (config as AxiosRequestConfig).requestOptions)
+    })
   },
 }
 
@@ -187,9 +190,10 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         withToken: true,
         // retry count and delay
         retry: {
-          count: 3,
+          count: 0,
           delay: 1000,
         },
+        errorWarning: false,
       },
     },
     opt || {},
