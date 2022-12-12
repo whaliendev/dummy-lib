@@ -194,7 +194,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         errorWarning: false,
       },
     },
-      opt || {},
+    opt || {},
     ),
   )
 }
