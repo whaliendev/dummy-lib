@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { ControlPlatformIcon, UserIcon } from 'tdesign-icons-vue-next'
-import { MessagePlugin, SubmitContext } from 'tdesign-vue-next'
+import type { SubmitContext } from 'tdesign-vue-next'
+import { MessagePlugin } from 'tdesign-vue-next'
 import { useAuthStore } from '@/store/modules/auth'
 import { debounce } from '@/utils'
 const props = defineProps<{
@@ -102,8 +103,10 @@ const handleAdminLogin = debounce(async ({ validateResult, firstError }: SubmitC
         <template #label>
           <UserIcon />&nbsp;&nbsp;&nbsp;读者登录
         </template>
-        <t-form :ref="userFormRef" class="user-form" :data="userFormData" label-width="0" :rules="userFormRules"
-          :status-icon="true" :required-mark="true" :show-error-message="true" @submit="handleUserLogin">
+        <t-form
+          :ref="userFormRef" class="user-form" :data="userFormData" label-width="0" :rules="userFormRules"
+          :status-icon="true" :required-mark="true" :show-error-message="true" @submit="handleUserLogin"
+        >
           <t-form-item name="cardNum">
             <t-input v-model="userFormData.cardNum" clearable max-character="12" placeholder="请输入你的校园卡号" />
           </t-form-item>
@@ -123,8 +126,10 @@ const handleAdminLogin = debounce(async ({ validateResult, firstError }: SubmitC
         <template #label>
           <ControlPlatformIcon />&nbsp;&nbsp;&nbsp;管理员登录
         </template>
-        <t-form :ref="adminFormRef" :data="adminFormData" label-width="0" :rules="adminFormRules" :status-icon="true"
-          @submit="handleAdminLogin">
+        <t-form
+          :ref="adminFormRef" :data="adminFormData" label-width="0" :rules="adminFormRules" :status-icon="true"
+          @submit="handleAdminLogin"
+        >
           <t-form-item name="idNum">
             <t-input v-model="adminFormData.idNum" clearable max-character="12" name="idNum" placeholder="请输入你的ID号码" />
           </t-form-item>
