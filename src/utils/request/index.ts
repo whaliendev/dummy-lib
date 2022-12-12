@@ -1,5 +1,3 @@
-// axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
-import type { AxiosRequestConfig } from 'axios'
 import { isString, merge } from '../utils'
 import type { AxiosTransform, CreateAxiosOptions } from './AxiosTransform'
 import { VAxios } from './Axios'
@@ -145,7 +143,7 @@ const transform: AxiosTransform = {
     return backoff.then((config) => {
       // the following request will be binded to axiosInstance, aso the following line is safe
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      request.request(config as AxiosRequestConfigRetry, (config as AxiosRequestConfig).requestOptions)
+      request.request(config as AxiosRequestConfigRetry, (config as any).requestOptions)
     })
   },
 }
@@ -196,7 +194,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         errorWarning: false,
       },
     },
-    opt || {},
+      opt || {},
     ),
   )
 }

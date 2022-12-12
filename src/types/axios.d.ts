@@ -13,14 +13,18 @@ export interface RequestOptions {
   withToken?: boolean;
   retry?: {
     count: number;
-    delay: number;
+    delay?: number;
   };
+  errorWarning?: boolean
 }
 
-export interface Result<T = any> {
-  code: number;
-  data: T;
+export interface ErrorResult {
+  errorCode: number | null
+  errorMessage: string | null
+  reason: string | null
 }
+
+export type Result<T = any> = T | ErrorResult
 
 export interface AxiosRequestConfigRetry extends AxiosRequestConfig {
   retryCount?: number;
