@@ -175,7 +175,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         isReturnNativeResponse: false,
         // whether we need do transformations to response
         // if needed, enable it.
-        isTransformResponse: true,
+        isTransformResponse: false,
         // whether we need join the params to url, when we initiate a post request
         joinParamsToUrl: false,
         // whether we need format the request data time

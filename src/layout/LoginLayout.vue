@@ -1,16 +1,29 @@
 <script lang="ts" setup>
 import { RollbackIcon } from 'tdesign-icons-vue-next'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import AccountForm from '@/components/AccountForm.vue'
 const props = defineProps<{
-  dest: string
+  dest?: string
 }>()
+
 const router = useRouter()
 const handleRollback = () => {
   router.go(-1)
 }
+
+const loginTab = computed<TabEnum>(() => {
+  if (!props.dest)
+    return 'user'
+  if (props.dest.includes('user'))
+    return 'user'
+  else return 'admin'
+})
+
 const loginStatus = ref<boolean>(false)
+const handleLogin = (status: boolean) => {
+  loginStatus.value = status
+}
 watch(loginStatus, (success) => {
   if (success) {
     if (props.dest)
@@ -25,7 +38,7 @@ watch(loginStatus, (success) => {
   <div class="wrap-out">
     <div class="page">
       <RollbackIcon size="36px" @click="handleRollback" />
-      <AccountForm v-model.lazy="loginStatus" />
+      <AccountForm :login-tab="loginTab" @update:login-status="handleLogin" />
     </div>
   </div>
 </template>

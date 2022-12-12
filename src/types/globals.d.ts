@@ -10,3 +10,8 @@ declare module '*.vue' {
 declare type Recordable<T = any> = Record<string, T>
 
 declare type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
+
+declare type TabEnum = 'user' | 'admin'
+declare type FormRules<D> = {
+  [field in keyof D]: Array<FormRule>
+}
