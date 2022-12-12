@@ -1,4 +1,10 @@
 <script lang="ts" setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const handleLogin = () => {
+  router.push({ name: 'login' })
+}
 </script>
 
 <template>
@@ -12,7 +18,7 @@
     </router-link>
     <div class="login-container">
       <t-avatar image="https://tdesign.gtimg.com/site/avatar.jpg" />
-      <t-button theme="primary">
+      <t-button theme="primary" @click="handleLogin">
         登录
       </t-button>
     </div>
