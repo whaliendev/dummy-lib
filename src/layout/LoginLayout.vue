@@ -3,9 +3,12 @@ import { RollbackIcon } from 'tdesign-icons-vue-next'
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import AccountForm from '@/components/AccountForm.vue'
+import { useAuthStore } from '@/store/modules/auth'
 const props = defineProps<{
   dest?: string
 }>()
+
+const authStore = useAuthStore()
 
 const router = useRouter()
 const handleRollback = () => {
@@ -26,6 +29,14 @@ const handleLogin = (status: boolean) => {
 }
 watch(loginStatus, (success) => {
   if (success) {
+    if (props.dest?.includes('user') && authStore.adminLoginStatus) {
+      router.push({ name: 'home' })
+      return
+    }
+    if (props.dest?.includes('admin') && authStore.userLoginStatus) {
+      router.push({ name: 'home' })
+      return
+    }
     if (props.dest)
       router.push({ name: props.dest, replace: true })
     else

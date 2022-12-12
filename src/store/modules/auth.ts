@@ -15,6 +15,10 @@ export const useAuthStore = defineStore('auth', {
       },
     }
   },
+  getters: {
+    userLoginStatus: state => state.user.loginStatus,
+    adminLoginStatus: state => state.admin.loginStatus,
+  },
   actions: {
     handleUserLogin(data: string, options: RequestOptions): Promise<boolean> {
       return new Promise((resolve, _reject) => {
@@ -53,6 +57,10 @@ export const useAuthStore = defineStore('auth', {
             resolve(false)
           })
       })
+    },
+    logout() {
+      this.user.loginStatus = false
+      this.admin.loginStatus = false
     },
   },
   persist: true,

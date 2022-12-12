@@ -3,6 +3,7 @@ import type { Component, PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import { RootListIcon } from 'tdesign-icons-vue-next'
+import { useAuthStore } from '@/store/modules/auth'
 
 export default defineComponent({
   props: {
@@ -30,6 +31,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const authStore = useAuthStore()
     const hintMsg = computed(() => {
       // TODO(whalien): add check auth logical
       if (props.requireLogin)
@@ -39,15 +41,24 @@ export default defineComponent({
       return ''
     })
 
+    const disableTooltip = computed(() => {
+      if (props.requireLogin && authStore.userLoginStatus)
+        return true
+      if (props.requireAdmin && authStore.adminLoginStatus)
+        return true
+      return false
+    })
+
     return {
       hintMsg,
+      disableTooltip,
     }
   },
 })
 </script>
 
 <template>
-  <t-tooltip :content="hintMsg" hide-empty-popup placement="top" trigger="hover">
+  <t-tooltip :content="hintMsg" hide-empty-popup placement="top" trigger="hover" :disabled="disableTooltip">
     <router-link :to="to">
       <component :is="featureIcon" size="2.2em" />
       <p>
