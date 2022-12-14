@@ -35,10 +35,10 @@ const transform: AxiosTransform = {
     if (!data)
       throw new Error('请求接口错误')
 
-    //  这里 code为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+    //  这里 code为 后台统一的字段，需要在 types.ts内修改为约定的数据格式
     const { reason } = data
 
-    // 这里逻辑可以根据项目进行修改
+    // 根据返回格式判断是否是正确的接口
     const hasSuccess = !(reason && reason.length)
     if (hasSuccess)
       return res.data
@@ -64,7 +64,7 @@ const transform: AxiosTransform = {
       formatRequestDate(data)
 
     if (config.method?.toUpperCase() === 'GET') {
-      if (!isString(params)) { // URLSearchParams
+      if (!isString(params)) { // URLSearchParams or object
         // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
         config.params = Object.assign(params || {}, joinTimestamp(joinTime, false))
       }
@@ -191,10 +191,10 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           count: 0,
           delay: 1000,
         },
+        // if there is an error, warning or not
         errorWarning: false,
       },
-    },
-    opt || {},
+    }, opt || {},
     ),
   )
 }
