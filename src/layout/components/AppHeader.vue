@@ -35,6 +35,7 @@ const handleLogin = () => {
   align-items: center;
   justify-content: space-between;
   background-color: var(--td-bg-color-container);
+  border-bottom: 1px solid var(--td-component-border);
 
   >a {
     text-decoration: none;

@@ -31,6 +31,8 @@ const routeRecords: Array<NamedRouteRecordRaw> = [
           requireLoggedIn: true,
         },
         children: [
+          // !!! Note that the name of the children of this route should have the form of 'user-[xxx]',
+          // or the permission feature will broke
           {
             name: 'user-borrowed',
             path: 'borrowed',
@@ -51,6 +53,8 @@ const routeRecords: Array<NamedRouteRecordRaw> = [
           requireAdmin: true,
         },
         children: [
+          // !!! Note that the name of the children of this route should have the form of 'admin-[xxx]',
+          // and the path should be the value in square bracket, or the permission feature will broke
           {
             name: 'admin-doc',
             path: 'doc',

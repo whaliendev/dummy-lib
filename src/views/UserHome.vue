@@ -4,5 +4,13 @@ import UserNavMenu from '@/components/NavMenu/UserNavMenu.vue'
 
 <template>
   <UserNavMenu />
-  <router-view />
+  <div class="user-view-wrapper">
+    <router-view />
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.user-view-wrapper {
+  background-color: var(--td-bg-color-container);
+}
+</style>
