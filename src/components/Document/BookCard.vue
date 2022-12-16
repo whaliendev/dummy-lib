@@ -13,7 +13,7 @@ const props = defineProps({
 
 const book = ref<BookModel | null>(null)
 const fetchData = async () => {
-  const res = await getBookData(String(props.document.id))
+  // const res = await getBookData(String(props.document.id))
 }
 
 fetchData()

@@ -36,14 +36,14 @@ export default defineComponent({
     addCopy: {
       type: Boolean,
       required: false,
-      default: true,
+      default: false,
     },
     arrearage: {
       type: Object as PropType<ArrearageObj>,
       required: false,
       default: () => {
         return {
-          require: true,
+          require: false,
           amount: 0.0,
         }
       },
@@ -88,9 +88,24 @@ export default defineComponent({
 <style lang="scss" scoped>
 .document-item-container {
   overflow: hidden;
-  box-shadow: 0 1px 20px -6px rgba(0, 0, 0, .5);
+  // box-shadow: 0 1px 20px -6px rgba(0, 0, 0, .5);
+  height: 224px;
+  border: 1px solid var(--td-component-border);
+
+  >.t-row {
+    height: 100%;
+
+    .document-slot .t-row {
+      height: 100%;
+    }
+
+    >.t-col {
+      height: 100%;
+    }
+  }
 
   :deep(.operation-col) {
+    background-color: #f9f9f9;
     padding: 8px 16px !important;
     border-left: 1px solid var(--td-gray-color-3);
   }
@@ -102,9 +117,9 @@ export default defineComponent({
 
     button {
       width: 100%;
-      margin: 8px auto;
+      margin: 10px auto;
       display: block;
-      padding: 6px 12px;
+      padding: 8px 12px;
       border-radius: var(--td-radius-default);
       color: var(--td-text-color-placeholder);
       background-color: var(--td-gray-color-2);
@@ -121,8 +136,8 @@ export default defineComponent({
   .arrearage {
     font-size: var(--td-font-size-mark-small);
     color: var(--td-error-color-7);
-    margin-top: 12px;
-    padding-left: 2px;
+    margin-top: 20px;
+    padding-left: 4px;
   }
 }
 </style>

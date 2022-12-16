@@ -18,10 +18,13 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .document-list-container {
-  width: 70%;
+  width: 72%;
+  background-color: #f1f1f1;
+  padding: 1px 36px;
+  border-radius: var(--td-radius-medium);
 }
 
 .document-item {
-  margin: 20px 0;
+  margin: 30px 0;
 }
 </style>
