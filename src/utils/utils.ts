@@ -1,4 +1,4 @@
-const getRawType = (val: object) => {
+export const getRawType = (val: object) => {
   return Object.prototype.toString.call(val).slice(8, -1)
 }
 

@@ -1,4 +1,5 @@
-import { isObject, isString } from '../utils'
+import { formatDate } from '../time'
+import { getRawType, isObject, isString } from '../utils'
 
 const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
@@ -21,8 +22,8 @@ export function formatRequestDate(params: Recordable) {
     return
 
   for (const key in params) {
-    if (params[key] && params[key]._isAMomentObject)
-      params[key] = params[key].format(DATE_TIME_FORMAT)
+    if (params[key] && getRawType(params[key]) === 'Date')
+      params[key] = formatDate(params[key], DATE_TIME_FORMAT) // TODO(whalien): refactor formatStr to match backend need
 
     if (isString(key)) {
       const value = params[key]
