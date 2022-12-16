@@ -8,19 +8,16 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AccountForm: typeof import('./src/components/AccountForm.vue')['default']
-    AdminHome: typeof import('./src/components/AdminHome/index.vue')['default']
     AdminNavMenu: typeof import('./src/components/NavMenu/AdminNavMenu.vue')['default']
     AppCard: typeof import('./src/components/AppCard.vue')['default']
     FeatureItem: typeof import('./src/components/FeatureList/FeatureItem.vue')['default']
     FeatureList: typeof import('./src/components/FeatureList/FeatureList.vue')['default']
-    NavMenu: typeof import('./src/components/NavMenu/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchBox: typeof import('./src/components/SearchBox.vue')['default']
     TAvatar: typeof import('tdesign-vue-next')['Avatar']
     TButton: typeof import('tdesign-vue-next')['Button']
     TCheckbox: typeof import('tdesign-vue-next')['Checkbox']
-    TCheckBox: typeof import('tdesign-vue-next')['CheckBox']
     TCol: typeof import('tdesign-vue-next')['Col']
     TForm: typeof import('tdesign-vue-next')['Form']
     TFormItem: typeof import('tdesign-vue-next')['FormItem']
@@ -33,8 +30,6 @@ declare module '@vue/runtime-core' {
     TTabPanel: typeof import('tdesign-vue-next')['TabPanel']
     TTabs: typeof import('tdesign-vue-next')['Tabs']
     TTooltip: typeof import('tdesign-vue-next')['Tooltip']
-    TTooltipLite: typeof import('tdesign-vue-next')['TooltipLite']
-    UserHome: typeof import('./src/components/UserHome/index.vue')['default']
     UserNavMenu: typeof import('./src/components/NavMenu/UserNavMenu.vue')['default']
   }
 }
