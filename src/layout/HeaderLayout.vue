@@ -13,3 +13,7 @@ import AppMain from './components/AppMain.vue'
     </section>
   </div>
 </template>
+
+<style lang="scss" scoped>
+
+</style>

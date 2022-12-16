@@ -10,7 +10,6 @@
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
   vertical-align: baseline;
 }
@@ -35,4 +34,9 @@ body {
   position: relative;
   max-height: 100vh;
   transition: all 1s;
+}
+
+.t-popup__content {
+  padding: 6px 8px !important;
+  color: var(--td-text-color-secondary) !important;
 }

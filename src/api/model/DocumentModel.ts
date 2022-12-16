@@ -16,18 +16,18 @@ export interface BookModel {
 export interface JournalModel {
   id: number
   title: string
-  publisher: string
-  pubDate: number
-  editors?: string
+  publisher: string | null
+  pubDate: string
+  editors: string | null
 }
 
 export interface ConferenceModel {
   id: number
   title: string
-  publisher?: string
-  pubDate?: string
-  location?: string
-  editors?: string
+  publisher: string | null
+  pubDate: string
+  location: string | null
+  editors: string | null
 }
 
 export type DocumentTypeEnum = 'Book' | 'Journal' | 'ConferenceProceeding'

@@ -3,14 +3,14 @@ import { ref, shallowRef } from 'vue'
 import { LocationIcon, RootListIcon, UserIcon, ViewModuleIcon } from 'tdesign-icons-vue-next'
 import AppCard from '../AppCard.vue'
 import FeatureItem from './FeatureItem.vue'
-const featuresList = ref([
-  { to: { name: 'user-borrowed' }, featureIcon: shallowRef(RootListIcon), desc: '文档归还', requireLogin: true },
-  { to: { name: 'user-borrowed' }, featureIcon: shallowRef(RootListIcon), desc: '借阅查询', requireLogin: true },
-  { to: { name: 'user-reserved' }, featureIcon: shallowRef(RootListIcon), desc: '预约查询', requireLogin: true },
-  { to: { name: 'admin-doc' }, featureIcon: shallowRef(ViewModuleIcon), desc: '文档管理', requireAdmin: true },
-  { to: { name: 'admin-reader' }, featureIcon: shallowRef(UserIcon), desc: '读者管理', requireAdmin: true },
-  { to: { name: 'admin-branch' }, featureIcon: shallowRef(LocationIcon), desc: '分馆管理', requireAdmin: true },
-])
+const featuresList = [
+  { to: { name: 'user-borrowed' }, featureIcon: RootListIcon, desc: '文档归还', requireLogin: true },
+  { to: { name: 'user-borrowed' }, featureIcon: RootListIcon, desc: '借阅查询', requireLogin: true },
+  { to: { name: 'user-reserved' }, featureIcon: RootListIcon, desc: '预约查询', requireLogin: true },
+  { to: { name: 'admin-doc' }, featureIcon: ViewModuleIcon, desc: '文档管理', requireAdmin: true },
+  { to: { name: 'admin-reader' }, featureIcon: UserIcon, desc: '读者管理', requireAdmin: true },
+  { to: { name: 'admin-branch' }, featureIcon: LocationIcon, desc: '分馆管理', requireAdmin: true },
+]
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const featuresList = ref([
     <t-row>
       <t-col
         v-for="({ to, featureIcon, desc, requireAdmin, requireLogin }, index) in featuresList" :key="index" :md="4"
-        :sm="6" :xs="12"
+        :sm="6"
       >
         <FeatureItem :to="to" :feature-icon="featureIcon" :require-admin="requireAdmin" :require-login="requireLogin">
           <template #desc>
@@ -34,6 +34,7 @@ const featuresList = ref([
 .featurelist {
   :deep(.t-col) {
     padding: 25px 0;
+    flex-shrink: 1;
     border: 1px solid var(--td-gray-color-2);
   }
 }

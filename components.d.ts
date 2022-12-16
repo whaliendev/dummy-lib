@@ -27,6 +27,7 @@ declare module '@vue/runtime-core' {
     TCol: typeof import('tdesign-vue-next')['Col']
     TForm: typeof import('tdesign-vue-next')['Form']
     TFormItem: typeof import('tdesign-vue-next')['FormItem']
+    TImage: typeof import('tdesign-vue-next')['Image']
     TInput: typeof import('tdesign-vue-next')['Input']
     TInputAdornment: typeof import('tdesign-vue-next')['InputAdornment']
     TMenu: typeof import('tdesign-vue-next')['Menu']
