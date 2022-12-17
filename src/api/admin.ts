@@ -7,7 +7,7 @@ const Api = {
 }
 
 export function getAllReaders(options: RequestOptions = {}) {
-  return request.post<Array<ReaderResult>>({
+  return request.get<Array<ReaderResult>>({
     url: Api.getAllReaders,
   }, options)
 }

@@ -1,41 +1,15 @@
 <script lang="ts">
 import { defineComponent, h } from 'vue'
+import type { AxiosResponse } from 'axios'
+import type { RequestOptions } from '@/types/axios'
+import type { ReaderResult } from '@/api/model/ReaderModel'
+import { getAllReaders } from '@/api/admin'
+import { cancelRegister } from '@/api/reader'
 
 export default defineComponent({
   data() {
     return {
-      readers: [
-        {
-          id: 1,
-          cost: null,
-          address: 'Ave. Shenyang',
-          name: 'jiuthree',
-          phoneNumber: '18888888888',
-          password: null,
-          type: 'faculty',
-          cardNumber: 2022001,
-        },
-        {
-          id: 2,
-          cost: null,
-          address: 'Ave. 5th',
-          name: 'admin',
-          phoneNumber: '12345678900',
-          password: null,
-          type: 'faculty',
-          cardNumber: 2022002,
-        },
-        {
-          id: 3,
-          cost: null,
-          address: 'WuHan University',
-          name: 'admin',
-          phoneNumber: null,
-          password: '123456',
-          type: null,
-          cardNumber: null,
-        },
-      ],
+      readers: [] as Array<ReaderResult>,
       columns: [
         { colKey: 'id', title: '身份编号' },
         { colKey: 'address', title: '地址' },
@@ -62,7 +36,7 @@ export default defineComponent({
                       'cursor': 'pointer',
                     },
                     onClick: () => { this.onUpdateUser(row.id) },
-                  }, '新增用户'),
+                  }, '修改信息'),
                 h('span',
                   {
                     class: 'reader-operation-btn',
@@ -76,6 +50,8 @@ export default defineComponent({
           },
         },
       ],
+      showCancleSuccess: false,
+      showCancleFail: false,
     }
   },
   computed: {
@@ -91,6 +67,16 @@ export default defineComponent({
       }
     },
   },
+  mounted() {
+    // this.handleGetAllUsers()
+    this.getAllUsers({
+      retry: {
+        count: 2,
+        delay: 50,
+      },
+      errorWarning: true,
+    })
+  },
   methods: {
     onChange: (params: any, context: any) => {
     },
@@ -100,11 +86,61 @@ export default defineComponent({
     onSelectChange: (selectedRowKeys: any, context: any) => {
 
     },
-    onUpdateUser: (readerId: any) => {
+    onUpdateUser(readerId: any) {
+      this.showCancleSuccess = true
       // console.log(readerId)
     },
-    onDeleteUser: (readerId: any) => {
-      // console.log(readerId)
+    onDeleteUser(readerId: any) {
+      this.cancelRegister(readerId, {
+        retry: {
+          count: 2,
+          delay: 50,
+        },
+        errorWarning: true,
+      }).then((res) => {
+        res ? this.showCancleSuccess = true : this.showCancleFail = true
+
+        this.getAllUsers({
+          retry: {
+            count: 2,
+            delay: 50,
+          },
+          errorWarning: true,
+        })
+      })
+    },
+    async getAllUsers(options: RequestOptions): Promise<boolean> {
+      return new Promise((resolve, _reject) => {
+        getAllReaders({ ...options, isReturnNativeResponse: true })
+          .then((res) => {
+            const response = res as unknown as AxiosResponse<Array<ReaderResult>>
+            if (response.status === 200) {
+              this.readers = response.data
+              resolve(true)
+            }
+            else {
+              resolve(false)
+            }
+          })
+          .catch(() => {
+            resolve(false)
+          })
+      })
+    },
+    async cancelRegister(id: String, options: RequestOptions): Promise<boolean> {
+      return new Promise((resolve, _reject) => {
+        cancelRegister(id, { ...options, isReturnNativeResponse: true })
+          .then((res: unknown): void => {
+            const response = res as unknown as AxiosResponse<any>
+            if (response.status === 200)
+              resolve(true)
+            else
+              resolve(false)
+          })
+          .catch(() => {
+            resolve(false)
+          })
+      })
     },
   },
 })
@@ -112,6 +148,21 @@ export default defineComponent({
 
 <template>
   <div class="reader-table-container">
+    <t-notification
+      v-if="showCancleSuccess"
+      class="delete-result-info"
+      theme="success"
+      title="读者删除成功"
+      :duration="2000"
+      @duration-end="showCancleSuccess = false"
+    /><t-notification
+      v-if="showCancleFail"
+      class="delete-result-info"
+      theme="error"
+      title="读者删除失败"
+      :duration="2000"
+      @duration-end="showCancleFail = false"
+    />
     <t-table
       row-key="id"
       :data="readers"
@@ -129,4 +180,9 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
+.delete-result-info {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+}
 </style>
