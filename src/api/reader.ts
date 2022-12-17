@@ -5,6 +5,7 @@ import { request } from '@/utils/request'
 const Api = {
   cancelRegister: '/reader/cancel-register',
   register: '/reader/register',
+  updateReader: '/reader/update',
 }
 
 export function cancelRegister(id: String, options: RequestOptions = {}) {
@@ -17,6 +18,13 @@ export function cancelRegister(id: String, options: RequestOptions = {}) {
 export function register(readerInfo: RegisterReaderModel, options: RequestOptions = {}) {
   return request.post({
     url: Api.register,
+    params: { ...readerInfo },
+  }, options)
+}
+
+export function updateReader(readerInfo: RegisterReaderModel, options: RequestOptions = {}) {
+  return request.post({
+    url: Api.updateReader,
     params: { ...readerInfo },
   }, options)
 }

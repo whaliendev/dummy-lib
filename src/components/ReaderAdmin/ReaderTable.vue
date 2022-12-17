@@ -4,7 +4,8 @@ import type { AxiosResponse } from 'axios'
 import type { RequestOptions } from '@/types/axios'
 import type { ReaderResult } from '@/api/model/ReaderModel'
 import { getAllReaders } from '@/api/admin'
-import { cancelRegister } from '@/api/reader'
+import { cancelRegister, updateReader } from '@/api/reader'
+import type { RegisterReaderModel } from '@/api/model/RegisterModel'
 
 export default defineComponent({
   data() {
@@ -35,7 +36,7 @@ export default defineComponent({
                       'margin-right': '10px',
                       'cursor': 'pointer',
                     },
-                    onClick: () => { this.onUpdateUser(row.id) },
+                    onClick: () => { this.updateUser(row) },
                   }, '修改信息'),
                 h('span',
                   {
@@ -50,8 +51,14 @@ export default defineComponent({
           },
         },
       ],
+      readerInfo: {} as RegisterReaderModel,
+
       showCancleSuccess: false,
       showCancleFail: false,
+
+      showUpdateInfoDialog: false,
+      showUpdateSuccess: false,
+      showUpdateFail: false,
     }
   },
   computed: {
@@ -85,9 +92,27 @@ export default defineComponent({
     onSelectChange: (selectedRowKeys: any, context: any) => {
 
     },
-    onUpdateUser(readerId: any) {
-      // TODO
-      this.showCancleSuccess = true
+    onUpdateUser() {
+      this.updateReader({
+        retry: {
+          count: 2,
+          delay: 50,
+        },
+        errorWarning: true,
+      })
+        .then((res: any) => {
+          res ? this.showUpdateSuccess = true : this.showUpdateFail = true
+          this.showUpdateInfoDialog = false
+        })
+        .then(() => {
+          this.getAllUsers({
+            retry: {
+              count: 2,
+              delay: 50,
+            },
+            errorWarning: true,
+          })
+        })
     },
     onDeleteUser(readerId: any) {
       this.cancelRegister(readerId, {
@@ -96,7 +121,7 @@ export default defineComponent({
           delay: 50,
         },
         errorWarning: true,
-      }).then((res) => {
+      }).then((res: any) => {
         res ? this.showCancleSuccess = true : this.showCancleFail = true
 
         this.getAllUsers({
@@ -107,6 +132,13 @@ export default defineComponent({
           errorWarning: true,
         })
       })
+    },
+    onCancelUpdate() {
+      this.showUpdateInfoDialog = false
+    },
+    updateUser(row: any) {
+      this.readerInfo = Object.assign({}, row)
+      this.showUpdateInfoDialog = true
     },
     async getAllUsers(options: RequestOptions): Promise<boolean> {
       return new Promise((resolve, _reject) => {
@@ -141,6 +173,21 @@ export default defineComponent({
           })
       })
     },
+    async updateReader(options: RequestOptions): Promise<boolean> {
+      return new Promise((resolve, _reject) => {
+        updateReader(this.readerInfo, { ...options, isReturnNativeResponse: true })
+          .then((res) => {
+            const response = res as AxiosResponse
+            if (response.status === 200)
+              resolve(true)
+            else
+              resolve(false)
+          })
+          .catch(() => {
+            resolve(false)
+          })
+      })
+    },
   },
 })
 </script>
@@ -154,7 +201,8 @@ export default defineComponent({
       title="读者删除成功"
       :duration="2000"
       @duration-end="showCancleSuccess = false"
-    /><t-notification
+    />
+    <t-notification
       v-if="showCancleFail"
       class="delete-result-info"
       theme="error"
@@ -162,6 +210,60 @@ export default defineComponent({
       :duration="2000"
       @duration-end="showCancleFail = false"
     />
+    <t-notification
+      v-if="showCancleSuccess"
+      class="update-result-info"
+      theme="success"
+      title="读者信息更新成功"
+      :duration="2000"
+      @duration-end="showUpdateSuccess = false"
+    />
+    <t-notification
+      v-if="showCancleFail"
+      class="update-result-info"
+      theme="error"
+      title="读者信息更新失败"
+      :duration="2000"
+      @duration-end="showUpdateFail = false"
+    />
+    <t-dialog
+      placement="center"
+      header="更新读者信息"
+      mode="modal"
+      :visible="showUpdateInfoDialog"
+      :on-confirm="onUpdateUser"
+      :on-close="onCancelUpdate"
+    >
+      <template #body>
+        <t-form :data="readerInfo">
+          <t-form-item label="地址" name="address">
+            <t-input v-model="readerInfo.address" placeholder="请输入地址" />
+          </t-form-item>
+          <t-form-item label="校园卡账号" name="cardNumber">
+            <t-input v-model="readerInfo.cardNumber" placeholder="请输入校园卡账号" />
+          </t-form-item>
+          <t-form-item label="姓名" name="name">
+            <t-input v-model="readerInfo.name" placeholder="请输入姓名" />
+          </t-form-item>
+          <t-form-item label="电话号码" name="phoneNumber">
+            <t-input v-model="readerInfo.phoneNumber" placeholder="请输入电话号码" />
+          </t-form-item>
+          <t-form-item label="类型" name="type">
+            <t-radio-group v-model="readerInfo.type" default-value="faculty">
+              <t-radio value="faculty">
+                faculty
+              </t-radio>
+              <t-radio value="student">
+                student
+              </t-radio>
+              <t-radio value="staff">
+                staff
+              </t-radio>
+            </t-radio-group>
+          </t-form-item>
+        </t-form>
+      </template>
+    </t-dialog>
     <t-table
       row-key="id"
       :data="readers"
@@ -179,7 +281,7 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-.delete-result-info {
+.delete-result-info .update-result-info {
   position: absolute;
   top: 50px;
   left: 50%;
