@@ -32,8 +32,7 @@ export default defineComponent({
 
         this.showRegisterDialog = false
 
-        // this.refresh = !this.refresh
-        this.$forceUpdate()
+        this.refresh = !this.refresh
       })
     },
     cancel() {
@@ -103,8 +102,8 @@ export default defineComponent({
               <t-radio value="faculty">
                 faculty
               </t-radio>
-              <t-radio value="reader">
-                reader
+              <t-radio value="student">
+                student
               </t-radio>
               <t-radio value="staff">
                 staff

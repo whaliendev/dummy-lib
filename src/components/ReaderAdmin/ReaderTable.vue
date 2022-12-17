@@ -68,7 +68,6 @@ export default defineComponent({
     },
   },
   mounted() {
-    // this.handleGetAllUsers()
     this.getAllUsers({
       retry: {
         count: 2,
@@ -87,8 +86,8 @@ export default defineComponent({
 
     },
     onUpdateUser(readerId: any) {
+      // TODO
       this.showCancleSuccess = true
-      // console.log(readerId)
     },
     onDeleteUser(readerId: any) {
       this.cancelRegister(readerId, {
@@ -115,7 +114,7 @@ export default defineComponent({
           .then((res) => {
             const response = res as unknown as AxiosResponse<Array<ReaderResult>>
             if (response.status === 200) {
-              this.readers = response.data
+              this.readers = response.data.reverse()
               resolve(true)
             }
             else {

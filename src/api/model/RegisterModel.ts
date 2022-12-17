@@ -3,5 +3,5 @@ export interface RegisterReaderModel {
   cardNumber?: string
   name: string
   phoneNumber?: string
-  type?: 'faculty' | 'reader' | 'staff'
+  type?: 'faculty' | 'student' | 'staff'
 }
