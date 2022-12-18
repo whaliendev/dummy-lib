@@ -19,14 +19,14 @@ export default defineComponent({
       readersWithAverageFinePaid: [] as Array<ReaderResult & AverageFinePaid>,
       columns: [
         { colKey: 'id', title: '身份编号' },
-        { colKey: 'address', title: '地址' },
-        { colKey: 'cost', title: '消费' },
-        { colKey: 'averageFinePaid', title: '平均罚款' },
         { colKey: 'name', title: '姓名' },
-        { colKey: 'phoneNumber', title: '电话号码' },
-        { colKey: 'password', title: '密码' },
         { colKey: 'type', title: '类型' },
         { colKey: 'cardNumber', title: '校园卡账号' },
+        { colKey: 'cost', title: '消费' },
+        { colKey: 'averageFinePaid', title: '平均罚款' },
+        { colKey: 'address', title: '地址' },
+        { colKey: 'phoneNumber', title: '电话号码' },
+        { colKey: 'password', title: '密码' },
         {
           colKey: 'operations',
           title: '操作',
@@ -83,7 +83,7 @@ export default defineComponent({
     pagination() {
       return {
         defaultCurrent: 1,
-        defaultPageSize: 10,
+        defaultPageSize: 20,
         total: this.total_number,
         showJumper: true,
       }
@@ -122,6 +122,10 @@ export default defineComponent({
       this.showUpdateInfoDialog = false
     },
     getTableData() {
+      this.readers = []
+      this.averageFinePaids = []
+      this.readersWithAverageFinePaid = []
+
       Promise.all([
         this.getAllUsers(this.requestOptions),
         this.getAllAverageFinePaid(this.requestOptions),
@@ -220,7 +224,7 @@ export default defineComponent({
   <div class="reader-table-container">
     <t-notification
       v-if="showCancleSuccess"
-      class="delete-result-info"
+      class="result-info"
       theme="success"
       title="读者删除成功"
       :duration="2000"
@@ -228,23 +232,23 @@ export default defineComponent({
     />
     <t-notification
       v-if="showCancleFail"
-      class="delete-result-info"
+      class="result-info"
       theme="error"
       title="读者删除失败"
       :duration="2000"
       @duration-end="showCancleFail = false"
     />
     <t-notification
-      v-if="showCancleSuccess"
-      class="update-result-info"
+      v-if="showUpdateSuccess"
+      class="result-info"
       theme="success"
       title="读者信息更新成功"
       :duration="2000"
       @duration-end="showUpdateSuccess = false"
     />
     <t-notification
-      v-if="showCancleFail"
-      class="update-result-info"
+      v-if="showUpdateFail"
+      class="result-info"
       theme="error"
       title="读者信息更新失败"
       :duration="2000"
@@ -305,7 +309,7 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-.delete-result-info .update-result-info {
+.result-info {
   position: absolute;
   top: 50px;
   left: 50%;

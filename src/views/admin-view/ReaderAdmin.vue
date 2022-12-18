@@ -61,7 +61,7 @@ export default defineComponent({
   <div class="reader-admin-container">
     <t-notification
       v-if="showRegisterSuccess"
-      class="register-result-info"
+      class="result-info"
       theme="success"
       title="读者注册成功"
       :duration="2000"
@@ -69,7 +69,7 @@ export default defineComponent({
     />
     <t-notification
       v-if="showRegisterFail"
-      class="register-result-info"
+      class="result-info"
       theme="error"
       title="读者注册失败"
       :duration="2000"
@@ -127,7 +127,7 @@ export default defineComponent({
   width: 100%;
   height: 100%;
 
-  .register-result-info {
+  .result-info {
     position: absolute;
     top: 50px;
     left: 50%;
