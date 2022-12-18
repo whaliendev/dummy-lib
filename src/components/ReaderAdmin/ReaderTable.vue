@@ -3,18 +3,25 @@ import { defineComponent, h } from 'vue'
 import type { AxiosResponse } from 'axios'
 import type { RequestOptions } from '@/types/axios'
 import type { ReaderResult } from '@/api/model/ReaderModel'
-import { getAllReaders } from '@/api/admin'
+import { getAllAverageFinePaid, getAllReaders } from '@/api/admin'
 import { cancelRegister, updateReader } from '@/api/reader'
 import type { RegisterReaderModel } from '@/api/model/RegisterModel'
+import type { AverageFinePaidModel } from '@/api/model/AverageFinePaidModel'
+
+interface AverageFinePaid { averageFinePaid: string }
 
 export default defineComponent({
   data() {
     return {
       readers: [] as Array<ReaderResult>,
+      averageFinePaids: [] as Array<AverageFinePaidModel>,
+      id2AverageFinePaid: new Map() as Map<string, string>,
+      readersWithAverageFinePaid: [] as Array<ReaderResult & AverageFinePaid>,
       columns: [
         { colKey: 'id', title: '身份编号' },
         { colKey: 'address', title: '地址' },
         { colKey: 'cost', title: '消费' },
+        { colKey: 'averageFinePaid', title: '平均罚款' },
         { colKey: 'name', title: '姓名' },
         { colKey: 'phoneNumber', title: '电话号码' },
         { colKey: 'password', title: '密码' },
@@ -59,11 +66,19 @@ export default defineComponent({
       showUpdateInfoDialog: false,
       showUpdateSuccess: false,
       showUpdateFail: false,
+
+      requestOptions: {
+        retry: {
+          count: 2,
+          delay: 50,
+        },
+        errorWarning: true,
+      },
     }
   },
   computed: {
     total_number() {
-      return this.readers.length
+      return this.readersWithAverageFinePaid.length
     },
     pagination() {
       return {
@@ -75,13 +90,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.getAllUsers({
-      retry: {
-        count: 2,
-        delay: 50,
-      },
-      errorWarning: true,
-    })
+    this.getTableData()
   },
   methods: {
     onChange: (params: any, context: any) => {
@@ -93,48 +102,32 @@ export default defineComponent({
 
     },
     onUpdateUser() {
-      this.updateReader({
-        retry: {
-          count: 2,
-          delay: 50,
-        },
-        errorWarning: true,
-      })
+      this.updateReader(this.requestOptions)
         .then((res: any) => {
           res ? this.showUpdateSuccess = true : this.showUpdateFail = true
           this.showUpdateInfoDialog = false
         })
         .then(() => {
-          this.getAllUsers({
-            retry: {
-              count: 2,
-              delay: 50,
-            },
-            errorWarning: true,
-          })
+          this.getTableData()
         })
     },
     onDeleteUser(readerId: any) {
-      this.cancelRegister(readerId, {
-        retry: {
-          count: 2,
-          delay: 50,
-        },
-        errorWarning: true,
-      }).then((res: any) => {
+      this.cancelRegister(readerId, this.requestOptions).then((res: any) => {
         res ? this.showCancleSuccess = true : this.showCancleFail = true
 
-        this.getAllUsers({
-          retry: {
-            count: 2,
-            delay: 50,
-          },
-          errorWarning: true,
-        })
+        this.getTableData()
       })
     },
     onCancelUpdate() {
       this.showUpdateInfoDialog = false
+    },
+    getTableData() {
+      Promise.all([
+        this.getAllUsers(this.requestOptions),
+        this.getAllAverageFinePaid(this.requestOptions),
+      ]).then(() => {
+        this.mergeReaderWithAverageFinePaid()
+      })
     },
     updateUser(row: any) {
       this.readerInfo = Object.assign({}, row)
@@ -147,6 +140,24 @@ export default defineComponent({
             const response = res as unknown as AxiosResponse<Array<ReaderResult>>
             if (response.status === 200) {
               this.readers = response.data.reverse()
+              resolve(true)
+            }
+            else {
+              resolve(false)
+            }
+          })
+          .catch(() => {
+            resolve(false)
+          })
+      })
+    },
+    async getAllAverageFinePaid(options: RequestOptions): Promise<boolean> {
+      return new Promise((resolve, _reject) => {
+        getAllAverageFinePaid({ ...options, isReturnNativeResponse: true })
+          .then((res) => {
+            const response = res as unknown as AxiosResponse<Array<AverageFinePaidModel>>
+            if (response.status === 200) {
+              this.averageFinePaids = response.data
               resolve(true)
             }
             else {
@@ -186,6 +197,19 @@ export default defineComponent({
           .catch(() => {
             resolve(false)
           })
+      })
+    },
+    mergeReaderWithAverageFinePaid() {
+      this.averageFinePaids.forEach(item =>
+        this.id2AverageFinePaid.set(item.reader.id.toString(), item.averageFinePaid))
+
+      this.readers.forEach((reader) => {
+        const newReader: ReaderResult & AverageFinePaid = {
+          ...reader,
+          averageFinePaid: this.id2AverageFinePaid.get(reader.id.toString()) as string,
+        }
+
+        this.readersWithAverageFinePaid.push(newReader)
       })
     },
   },
@@ -266,7 +290,7 @@ export default defineComponent({
     </t-dialog>
     <t-table
       row-key="id"
-      :data="readers"
+      :data="readersWithAverageFinePaid"
       :columns="columns"
       :stripe="true"
       :bordered="true"
