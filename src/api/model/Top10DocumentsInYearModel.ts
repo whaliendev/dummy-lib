@@ -1,6 +1,6 @@
 import type { DocumentApiModel } from './DocumentApiModel'
 
 export interface Top10DocumentsInYearModel {
-  borrowedNums: string
+  borrowedNums: number
   document: DocumentApiModel
 }

@@ -2,7 +2,7 @@ import type { LibraryModel } from './LibraryModel'
 import type { ReaderResult } from './ReaderModel'
 
 interface TopReader {
-  borrowedDocumentCounts: string
+  borrowedDocumentCounts: number
   reader: ReaderResult
 }
 

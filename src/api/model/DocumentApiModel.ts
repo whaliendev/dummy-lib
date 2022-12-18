@@ -4,9 +4,9 @@
  */
 
 export interface DocumentApiModel {
-  id: string
+  id: number
   publicationDate: string
-  publisherId: string
+  publisherId: number
   title: string
   type: 'Book' | 'ConferenceProceeding' | 'Journal'
 }

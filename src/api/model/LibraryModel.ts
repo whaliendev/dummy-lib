@@ -1,5 +1,5 @@
 export interface LibraryModel {
-  id: string
+  id: number
   location: string
   name: string
 }
