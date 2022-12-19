@@ -5,6 +5,6 @@ export interface ReaderResult {
   name: string
   phoneNumber?: string
   password: string
-  type?: 'faculty' | 'reader' | 'staff'
+  type?: 'faculty' | 'student' | 'staff'
   cardNumber?: string
 }

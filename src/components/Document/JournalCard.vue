@@ -26,7 +26,9 @@ const journal: JournalModel = reactive({
       <t-image :src="journalCoverUrl" alt="default journal cover" fit="cover" position="top" />
     </t-col>
     <t-col class="journal-desc-container" :xs="12" :sm="8">
-      <p class="title">{{ journal.title }}</p>
+      <p class="title">
+        {{ journal.title }}
+      </p>
     </t-col>
   </t-row>
 </template>
