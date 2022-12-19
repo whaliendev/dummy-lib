@@ -10,13 +10,18 @@
  * -> Top10DocumentsInYearModel
  */
 
-import { defineComponent } from 'vue'
+import { defineComponent, h, ref } from 'vue'
+import type { AxiosResponse } from 'axios'
+import { LocationIcon } from 'tdesign-icons-vue-next'
 import type { LibraryModel } from '@/api/model/LibraryModel'
 import type { Top10ReaderAndDocumentNumsInBranchesModel } from '@/api/model/Top10ReaderAndDocumentNumsInBranchesModel'
 import type { Top10DocumentsInBranchesModel } from '@/api/model/Top10DocumentsInBranchesModel'
 import type { Top10DocumentsInYearModel } from '@/api/model/Top10DocumentsInYearModel'
 import type { DocumentApiModel } from '@/api/model/DocumentApiModel'
 import type { ReaderResult } from '@/api/model/ReaderModel'
+import { rank1List, rank2List, rank3List } from '@/mock/admin-view/BranchAdmin'
+import { getTop10DocumentsInBranches, getTop10DocumentsInYear, getTop10ReaderAndDocumentNumsInBranches } from '@/api/admin'
+import type { RequestOptions } from '@/types/axios'
 
 type rank1 = { borrowedDocumentCounts: number } & ReaderResult
 
@@ -50,384 +55,11 @@ export default defineComponent({
         },
       ] as Array<LibraryModel>,
 
-      rank1List: [
-        {
-          library: {
-            id: 16,
-            location: 'OSSU工学校区',
-            name: 'OSSU工学分馆',
-          },
-          topReaderList: [
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-            {
-              borrowedDocumentCounts: 10,
-              reader: {
-                id: 890,
-                cost: 123,
-                address: '工九',
-                name: '杨枫',
-                phoneNumber: '15549536131',
-                password: 'null',
-                type: 'student',
-                cardNumber: '20220019',
-              },
-            },
-          ],
-        },
-        {
-          library: {
-            id: 17,
-            location: 'OSSU文理校区',
-            name: 'OSSU图书馆总馆',
-          },
-          topReaderList: [],
-        },
-        {
-          library: {
-            id: 18,
-            location: 'OSSU医学校区',
-            name: 'OSSU图书馆医学分馆',
-          },
-          topReaderList: [],
-        },
-        {
-          library: {
-            id: 19,
-            location: 'OSSU信息校区',
-            name: 'OSSU图书馆信息学分馆',
-          },
-          topReaderList: [],
-        },
-      ] as Array<Top10ReaderAndDocumentNumsInBranchesModel>,
+      rank1List: [] as Array<Top10ReaderAndDocumentNumsInBranchesModel>,
 
-      rank2List: [
-        {
-          library: {
-            id: 16,
-            location: 'OSSU工学校区',
-            name: 'OSSU工学分馆',
-          },
-          topDocuments: [
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-            {
-              id: 623,
-              title: 'Essentials of Software Engineering',
-              publisherId: 622,
-              publicationDate: '2022-12-14T10:12:16',
-              type: 'Book',
-            },
-          ],
-          borrowedCounts: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
-        },
-        {
-          library: {
-            id: 17,
-            location: 'OSSU文理校区',
-            name: 'OSSU图书馆总馆',
-          },
-          topDocuments: [],
-          borrowedCounts: [],
-        },
-        {
-          library: {
-            id: 18,
-            location: 'OSSU医学校区',
-            name: 'OSSU图书馆医学分馆',
-          },
-          topDocuments: [],
-          borrowedCounts: [],
-        },
-        {
-          library: {
-            id: 19,
-            location: 'OSSU信息校区',
-            name: 'OSSU图书馆信息学分馆',
-          },
-          topDocuments: [],
-          borrowedCounts: [],
-        },
-      ] as Array<Top10DocumentsInBranchesModel>,
+      rank2List: [] as Array<Top10DocumentsInBranchesModel>,
 
-      rank3List: [
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-        {
-          borrowedNums: 10,
-          document: {
-            id: 623,
-            title: 'Essentials of Software Engineering',
-            publisherId: 622,
-            publicationDate: '2022-12-14T10:12:16',
-            type: 'Book',
-          },
-        },
-      ] as Array<Top10DocumentsInYearModel>,
+      rank3List: [] as Array<Top10DocumentsInYearModel>,
 
       rank1Map: new Map() as Map<number, Array<rank1>>,
 
@@ -455,43 +87,124 @@ export default defineComponent({
         { colKey: 'borrowedNums', title: '借阅次数' },
       ],
 
+      requestOptions: {
+        retry: {
+          count: 2,
+          delay: 50,
+        },
+        errorWarning: true,
+      },
     }
   },
   mounted() {
-    this.rank1List.forEach((item) => {
-      const id = item.library.id
-      const readerAndCountList = item.topReaderList.map((topReader) => {
-        const reader = topReader.reader
-        return {
-          borrowedDocumentCounts: topReader.borrowedDocumentCounts,
-          ...reader,
-        }
-      })
-      this.rank1Map.set(id, readerAndCountList)
-    })
-
-    this.rank2List.forEach((item) => {
-      const id = item.library.id
-      const documentList = item.topDocuments.map((topDocument, index) => {
-        const borrowedCount = item.borrowedCounts[index]
-        return {
-          borrowedCount,
-          ...topDocument,
-        }
-      })
-      this.rank2Map.set(id, documentList)
-    })
-
-    this.rank3Data = this.rank3List.map((item) => {
-      const document = item.document
-      return {
-        borrowedNums: item.borrowedNums,
-        ...document,
-      }
+    // this.getMockData()
+    // this.processData()
+    Promise.all([
+      this.getRank1Data(this.requestOptions),
+      this.getRank2Data(this.requestOptions),
+      this.getRank3Data(this.requestOptions),
+    ]).then(() => {
+      this.processData()
     })
   },
   methods: {
+    getData() {
+      this.getRank1Data(this.requestOptions)
+      this.getRank2Data(this.requestOptions)
+      this.getRank3Data(this.requestOptions)
+    },
+    async getRank1Data(options: RequestOptions): Promise<boolean> {
+      return new Promise((resolve, _reject) => {
+        getTop10ReaderAndDocumentNumsInBranches({ ...options, isReturnNativeResponse: true })
+          .then((res) => {
+            const response = res as unknown as AxiosResponse<Array<Top10ReaderAndDocumentNumsInBranchesModel>>
+            if (response.status === 200) {
+              this.rank1List = response.data
+              resolve(true)
+            }
+            else {
+              resolve(false)
+            }
+          })
+          .catch(() => {
+            resolve(false)
+          })
+      })
+    },
+    async getRank2Data(options: RequestOptions): Promise<boolean> {
+      return new Promise((resolve, _reject) => {
+        getTop10DocumentsInBranches({ ...options, isReturnNativeResponse: true })
+          .then((res) => {
+            const response = res as unknown as AxiosResponse<Array<Top10DocumentsInBranchesModel>>
+            if (response.status === 200) {
+              this.rank2List = response.data
+              resolve(true)
+            }
+            else {
+              resolve(false)
+            }
+          })
+          .catch(() => {
+            resolve(false)
+          })
+      })
+    },
+    async getRank3Data(options: RequestOptions): Promise<boolean> {
+      return new Promise((resolve, _reject) => {
+        getTop10DocumentsInYear({ ...options, isReturnNativeResponse: true })
+          .then((res) => {
+            const response = res as unknown as AxiosResponse<Array<Top10DocumentsInYearModel>>
+            if (response.status === 200) {
+              this.rank3List = response.data
+              resolve(true)
+            }
+            else {
+              resolve(false)
+            }
+          })
+          .catch(() => {
+            resolve(false)
+          })
+      })
+    },
+    getMockData() {
+      this.rank1List = rank1List as Array<Top10ReaderAndDocumentNumsInBranchesModel>
+      this.rank2List = rank2List as Array<Top10DocumentsInBranchesModel>
+      this.rank3List = rank3List as Array<Top10DocumentsInYearModel>
+    },
+    processData() {
+      this.rank1List.forEach((item) => {
+        const id = item.library.id
+        const readerAndCountList = item.topReaderList.map((topReader) => {
+          const reader = topReader.reader
+          return {
+            borrowedDocumentCounts: topReader.borrowedDocumentCounts,
+            ...reader,
+          }
+        })
+        this.rank1Map.set(id, readerAndCountList)
+      })
 
+      this.rank2List.forEach((item) => {
+        const id = item.library.id
+        const documentList = item.topDocuments.map((topDocument, index) => {
+          const borrowedCount = item.borrowedCounts[index]
+          return {
+            borrowedCount,
+            ...topDocument,
+          }
+        })
+        this.rank2Map.set(id, documentList)
+      })
+
+      this.rank3Data = this.rank3List.map((item) => {
+        const document = item.document
+        return {
+          borrowedNums: item.borrowedNums,
+          ...document,
+        }
+      })
+    },
   },
 })
 </script>
@@ -500,7 +213,7 @@ export default defineComponent({
   <div class="branch-admin-container">
     <t-tabs :default-value="1">
       <t-tab-panel :value="1" label="图书馆总览">
-        <div class="t-tab-panel-container">
+        <div class="card-container">
           <t-card title="本年度最受欢迎的书籍（Top 10）" header-bordered :style="{ width: '1200px' }">
             <t-table
               row-key="id"
@@ -513,7 +226,12 @@ export default defineComponent({
         </div>
       </t-tab-panel>
       <t-tab-panel v-for="library in libraries" :key="library.id" :value="library.id" :label="library.name">
-        <div class="t-tab-panel-container">
+        <div class="library-location">
+          <t-tag size="large">
+            地址：{{ library.location }}
+          </t-tag>
+        </div>
+        <div class="card-container">
           <t-card class="rank-list-card" title="读者借阅排行榜（Top 10）" header-bordered :style="{ width: '800px' }">
             <t-table
               row-key="id"
@@ -543,8 +261,12 @@ export default defineComponent({
   width: 100%;
   height: 100%;
 
-  .t-tab-panel-container {
-    height: 1000px;
+  .library-location {
+    margin: 20px 0 0 20px;
+  }
+
+  .card-container {
+    // height: 1000px;
     // background-color: black;
     margin-top: 20px;
     display: flex;
