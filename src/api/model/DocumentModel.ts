@@ -1,41 +1,60 @@
-interface AuthorInfo {
-  name: string
-  url?: string
-}
+import type { PublisherModel } from './Publisher'
 
 export interface BookModel {
-  id: number
+  authorId: number
+  isbn: string
+  publicationDate: string
+  publisherId: number
   title: string
-  publisher: string
-  pubDate: number
-  authors: Array<AuthorInfo>
-  pageNum?: number
-  cover: string
-}
-
-export interface JournalModel {
-  id: number
-  title: string
-  publisher: string | null
-  pubDate: string
-  editors: string | null
 }
 
 export interface ConferenceModel {
-  id: number
+  date: string
+  editor: string
+  location: string
+  publicationDate: string
+  publisherId: number
   title: string
-  publisher: string | null
-  pubDate: string
-  location: string | null
-  editors: string | null
 }
 
-export type DocumentTypeEnum = 'Book' | 'Journal' | 'ConferenceProceeding'
-
-export interface DocumentModel {
+export interface JournalModel {
+  editor: string
   id: number
+  name: string
+  publicationDate: string
+  publisherId: number
+  scope: string
   title: string
-  publisher?: string
-  pubDate?: string
+  volumes?: Array<{
+    editor: string
+    id: number
+    journalId: number
+    number: string
+  }>
+}
+
+export interface LibDocumentModel {
+  documentId: number
+  id: number
+  libId: number
+  libraryLocation: string
+  libraryName: string
+  number: number
+  totalNumber: number
+}
+
+export type DocumentTypeEnum = 'book' | 'journal' | 'conference'
+
+export interface DocumentDetailModel {
+  documentContent: {
+    bookVo?: BookModel
+    conferenceProceedingVo?: ConferenceModel
+    journalVo?: JournalModel
+  }
+  id: number
+  libDocumentsVo: Array<LibDocumentModel>
+  publicationDate: string
+  publisher: PublisherModel
+  title: string
   type: DocumentTypeEnum
 }
