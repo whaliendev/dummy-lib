@@ -27,6 +27,9 @@ export const useAuthStore = defineStore('auth', {
       this.$hydrate({ runHooks: false })
       return state.admin.loginStatus
     },
+    userId(state): number {
+      return state.user.info?.id || -1
+    },
   },
   actions: {
     handleUserLogin(data: string, options: RequestOptions): Promise<boolean> {

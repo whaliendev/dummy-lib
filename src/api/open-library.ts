@@ -1,12 +1,12 @@
 import type { RequestOptions } from '@/types/axios'
 import { request } from '@/utils/request'
 
-interface AuthorInfo {
+export interface AuthorInfo {
   name: string
   url: string
 }
 
-interface PublisherInfo {
+export interface PublisherInfo {
   name: string
 }
 
@@ -31,26 +31,26 @@ export interface BookModel {
 }
 
 export interface BookResult {
-  [key: string]: BookModel
+  status: string
+  statusText: string
+  data: BookModel
 }
 
 const Api = {
-  books: '/books',
+  book: '/book',
 }
 
 export function getBookData(isbn: string, options: RequestOptions = {}) {
   return request.get<BookResult>({
-    url: Api.books,
+    url: Api.book,
     params: {
-      bibkeys: `ISBN:${isbn}`,
-      jscmd: 'data',
-      format: 'json',
+      isbn,
     },
     withCredentials: false,
   },
   {
     ...{
-      apiUrl: 'https://openlibrary.org',
+      apiUrl: 'http://43.156.250.168:3000',
       urlPrefix: '/api',
     },
     ...options,

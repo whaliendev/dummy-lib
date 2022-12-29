@@ -43,7 +43,7 @@ export interface LibDocumentModel {
   totalNumber: number
 }
 
-export type DocumentTypeEnum = 'book' | 'journal' | 'conference'
+export type DocumentTypeEnum = 'Book' | 'Journal' | 'ConferenceProceeding'
 
 export interface DocumentDetailModel {
   documentContent: {
@@ -56,5 +56,13 @@ export interface DocumentDetailModel {
   publicationDate: string
   publisher: PublisherModel
   title: string
+  type: DocumentTypeEnum
+}
+
+export interface DocumentMetaModel {
+  id: number
+  title: string
+  publisherId: number
+  publicationDate: string
   type: DocumentTypeEnum
 }

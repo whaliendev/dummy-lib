@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import DocumentItem from './DocumentItem.vue'
-import type { DocumentModel } from '@/api/model/DocumentModel'
+import type { DocumentMetaModel } from '@/api/model/DocumentModel'
 const props = defineProps({
   documentList: {
-    type: Array<DocumentModel>,
+    type: Array<DocumentMetaModel>,
     required: false,
     default: [],
   },
@@ -12,19 +12,22 @@ const props = defineProps({
 
 <template>
   <div class="document-list document-list-container">
-    <DocumentItem v-for="document in documentList" :key="document.id" :document="document" />
+    <DocumentItem
+      v-for="document in documentList" :key="document.id" :document="document" :op="true" :borrow="true"
+      :reserve="true"
+    />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .document-list-container {
-  width: 72%;
+  width: 64%;
   background-color: #f1f1f1;
-  padding: 1px 36px;
+  padding: 1px 28px;
   border-radius: var(--td-radius-medium);
 }
 
 .document-item {
-  margin: 30px 0;
+  margin: 20px 0;
 }
 </style>

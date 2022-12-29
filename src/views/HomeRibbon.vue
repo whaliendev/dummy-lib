@@ -1,89 +1,46 @@
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue'
+import { computed, nextTick, reactive, ref, watch } from 'vue'
 import SearchBox from '@/components/SearchBox.vue'
 import FeatureList from '@/components/FeatureList/FeatureList.vue'
 import DocumentList from '@/components/Document/DocumentList.vue'
 import LoadMoreHint from '@/components/LoadMoreHint.vue'
-import type { DocumentModel } from '@/api/model/DocumentModel'
+import type { DocumentMetaModel } from '@/api/model/DocumentModel'
 import type { LoadWhatEnum } from '@/components/LoadMoreHint.vue'
+import { useDocumentStore } from '@/store/modules/document'
 
-const documentList: Array<DocumentModel> = reactive([
-  {
-    id: 190,
-    title: 'International Conference on Software Engineering of 2022',
-    publisher: '9',
-    pubDate: '2022-12-14T11:17:08',
-    type: 'ConferenceProceeding',
-  },
-  {
-    id: 196,
-    title: 'IEEE Transactions on Software Engineering',
-    publisher: '195',
-    pubDate: '2022-12-14T11:23:43',
-    type: 'Journal',
-  },
-  {
-    id: 304,
-    title: 'Modern Software Engineering',
-    publisher: '303',
-    pubDate: '2022-12-14T10:12:16',
-    type: 'Book',
-  },
-  {
-    id: 309,
-    title: 'Agile Software Development',
-    publisher: '308',
-    pubDate: '2022-12-14T10:12:16',
-    type: 'Book',
-  },
-  {
-    id: 313,
-    title: 'Friendly Guide to Software Development',
-    publisher: '312',
-    pubDate: '2022-12-14T10:12:16',
-    type: 'Book',
-  },
-  {
-    id: 318,
-    title: 'Fundamentals of Software Architecture',
-    publisher: '317',
-    pubDate: '2020-02-11T00:00:00',
-    type: 'Book',
-  },
-  {
-    id: 322,
-    title: 'Beginning Software Engineering',
-    publisher: '321',
-    pubDate: '2022-12-14T10:12:16',
-    type: 'Book',
-  },
-  {
-    id: 326,
-    title: 'Righting Software',
-    publisher: '325',
-    pubDate: '2022-12-14T10:12:16',
-    type: 'Book',
-  },
-  {
-    id: 332,
-    title: 'Java Software Solutions',
-    publisher: '331',
-    pubDate: '2017-02-20T00:00:00',
-    type: 'Book',
-  },
-  {
-    id: 370,
-    title: 'Software Engineering at Google',
-    publisher: '369',
-    pubDate: '2020-03-17T00:00:00',
-    type: 'Book',
-  },
-])
+const documentStore = useDocumentStore()
+
+const documentList = ref<Array<DocumentMetaModel>>()
+watch(() => documentStore.home.docList, (newVal, oldVal) => {
+  documentList.value = newVal.slice(0, 10)
+})
 const showSearchResults = computed(() => {
-  return documentList.length > 0
+  return (documentList.value?.length || 0) > 0
+})
+
+watch(() => showSearchResults.value, (newVal, oldVal) => {
+  if (newVal) {
+    nextTick(() => {
+      const searchResults = document.getElementById('search-results')
+      searchResults?.scrollIntoView({
+        behavior: 'smooth',
+      })
+    })
+  }
 })
 
 const showWhat = ref<LoadWhatEnum>('no')
+watch(() => documentList.value, (newVal, oldVal) => {
+  if ((documentList.value?.length || 0) < documentStore.home.docList.length)
+    showWhat.value = 'btn'
+  else
+    showWhat.value = 'nomore'
+})
+
+const handleLoadMore = () => {
+  showWhat.value = 'gif'
+  documentList.value = [...documentList.value as Array<DocumentMetaModel>, ...documentStore.home.docList.slice((documentList.value?.length || 0), (documentList.value?.length || 0) + 10)]
+}
 </script>
 
 <template>
@@ -91,9 +48,9 @@ const showWhat = ref<LoadWhatEnum>('no')
     <SearchBox />
     <FeatureList />
   </div>
-  <div v-show="showSearchResults" class="search-results">
+  <div v-show="showSearchResults" id="search-results" class="search-results">
     <DocumentList :document-list="documentList" />
-    <LoadMoreHint :show-what="showWhat" />
+    <LoadMoreHint :show-what="showWhat" :on-click="handleLoadMore" />
   </div>
 </template>
 
@@ -133,7 +90,11 @@ const showWhat = ref<LoadWhatEnum>('no')
   margin: 30px 0;
 
   :deep(.document-list) {
-    margin: 0 auto;
+    margin: -8px auto;
+  }
+
+  :deep(.hint-container) {
+    margin-top: 20px;
   }
 }
 </style>

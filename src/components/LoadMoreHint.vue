@@ -9,6 +9,10 @@ export default defineComponent({
       type: String as PropType<LoadWhatEnum>,
       required: true,
     },
+    onClick: {
+      type: Function,
+      required: true,
+    },
   },
   setup(props) {
     const showHintRef = ref(false)
@@ -41,10 +45,13 @@ export default defineComponent({
 
     watch(() => props.showWhat, reactToShowWhat)
 
+    const handleLoadMore = props.onClick as (payment: MouseEvent) => void
+
     return {
       showHintRef,
       loadMoreRef,
       loadingMoreRef,
+      handleLoadMore,
     }
   },
 })
@@ -54,7 +61,7 @@ export default defineComponent({
   <div v-show="showHintRef" class="hint-container">
     <div v-if="loadMoreRef" class="load-more-container">
       <img v-if="loadingMoreRef" class="loading-more-img" src="../assets/loading-lines.gif" alt="loading more gif">
-      <button v-else class="load-more-btn">
+      <button v-else class="load-more-btn" @click="handleLoadMore">
         加载更多内容...
       </button>
     </div>
