@@ -40,6 +40,7 @@ declare module '@vue/runtime-core' {
     TDialog: typeof import('tdesign-vue-next')['Dialog']
     TForm: typeof import('tdesign-vue-next')['Form']
     TFormItem: typeof import('tdesign-vue-next')['FormItem']
+    TIcon: typeof import('tdesign-vue-next')['Icon']
     TImage: typeof import('tdesign-vue-next')['Image']
     TImg: typeof import('tdesign-vue-next')['Img']
     TInput: typeof import('tdesign-vue-next')['Input']
@@ -54,6 +55,7 @@ declare module '@vue/runtime-core' {
     TTable: typeof import('tdesign-vue-next')['Table']
     TTabPanel: typeof import('tdesign-vue-next')['TabPanel']
     TTabs: typeof import('tdesign-vue-next')['Tabs']
+    TTag: typeof import('tdesign-vue-next')['Tag']
     TTooltip: typeof import('tdesign-vue-next')['Tooltip']
     UserNavMenu: typeof import('./src/components/NavMenu/UserNavMenu.vue')['default']
   }
