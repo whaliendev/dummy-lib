@@ -42,7 +42,7 @@ const handleActivatedChange = (val: MenuValue) => {
 
 <style lang="scss" scoped>
 .admin-nav-menu-container {
-  height: 100vh;
+  min-height: 100%;
   max-width: 204px;
   border-right: 1px solid var(--td-component-border);
 }

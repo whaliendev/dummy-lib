@@ -15,6 +15,7 @@ import AdminNavMenu from '@/components/NavMenu/AdminNavMenu.vue'
 .admin-home-container {
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 .admin-view-wrapper {
   background-color: var(--td-bg-color-container);
