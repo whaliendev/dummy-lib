@@ -49,6 +49,7 @@ declare module '@vue/runtime-core' {
     TMenu: typeof import('tdesign-vue-next')['Menu']
     TMenuItem: typeof import('tdesign-vue-next')['MenuItem']
     TNotification: typeof import('tdesign-vue-next')['Notification']
+    TPagination: typeof import('tdesign-vue-next')['Pagination']
     TRadio: typeof import('tdesign-vue-next')['Radio']
     TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
     TRow: typeof import('tdesign-vue-next')['Row']
