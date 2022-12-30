@@ -10,7 +10,7 @@ import type { DocumentMetaModel } from '@/api/model/DocumentModel'
 
 export interface ArrearageObj {
   require: boolean
-  amount: number
+  amount: string
 }
 
 export default defineComponent({
@@ -49,7 +49,7 @@ export default defineComponent({
       default: () => {
         return {
           require: false,
-          amount: 0,
+          amount: '0.00',
         }
       },
     },

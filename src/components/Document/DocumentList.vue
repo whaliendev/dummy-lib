@@ -4,7 +4,7 @@ import type { DocumentMetaModel } from '@/api/model/DocumentModel'
 const props = defineProps({
   documentList: {
     type: Array<DocumentMetaModel>,
-    required: false,
+    required: true,
     default: [],
   },
 })
