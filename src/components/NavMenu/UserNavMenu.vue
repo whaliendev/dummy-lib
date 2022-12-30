@@ -4,7 +4,7 @@ import type { MenuValue } from 'tdesign-vue-next'
 import { onMounted, ref } from 'vue'
 const activatedItem = ref('')
 onMounted(() => {
-  const pathSegs = window.location.pathname.split('/')
+  const pathSegs = window.location.hash.split('/')
   activatedItem.value = pathSegs[pathSegs.length - 1]
 })
 const handleActivatedChange = (val: MenuValue) => {
