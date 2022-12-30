@@ -97,6 +97,7 @@ export class VAxios {
   // 支持Form Data
   supportFormData(config: AxiosRequestConfig) {
     const headers = config.headers || this.options.headers
+    // @ts-expect-error: it do exists on headers
     const contentType = headers?.['Content-Type'] || headers?.['content-type']
 
     if (
