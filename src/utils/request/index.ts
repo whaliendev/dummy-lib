@@ -3,14 +3,13 @@ import type { AxiosTransform, CreateAxiosOptions } from './AxiosTransform'
 import { VAxios } from './Axios'
 import { formatRequestDate, joinTimestamp, setObjToUrlParams } from './utils'
 import type { AxiosRequestConfigRetry } from '@/types/axios'
-import proxy from '@/config/proxy'
 import { TOKEN_NAME } from '@/config/global'
 
-const env = import.meta.env.MODE || 'development'
+// const env = import.meta.env.MODE || 'development'
 
 // 如果是mock模式 或 没启用直连代理 就不配置host 会走本地Mock拦截 或 Vite 代理
-const host = env === 'mock' || !proxy.isRequestProxy ? '' : (proxy[env as keyof typeof proxy] as any).host
-
+// const host = env === 'mock' || !proxy.isRequestProxy ? '' : (proxy[env as keyof typeof proxy] as any).host
+const host = 'http://125.220.157.225:27023'
 // 数据处理，方便区分多种处理方式
 const transform: AxiosTransform = {
   transformResponseHook: (res, options) => {
