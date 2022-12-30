@@ -1,0 +1,116 @@
+import type { DocumentMetaModel } from '@/api/model/DocumentModel'
+
+export const documentBorrowed: Array<DocumentMetaModel> = [
+  {
+    id: 623,
+    title: 'Essentials of Software Engineering',
+    publisherId: 622,
+    publicationDate: '2022-12-14T10:12:16',
+    type: 'Book',
+  },
+  {
+    id: 626,
+    title: 'Modern Software Engineering',
+    publisherId: 625,
+    publicationDate: '2022-12-14T10:12:16',
+    type: 'Book',
+  },
+  {
+    id: 630,
+    title: 'Agile Software Development',
+    publisherId: 629,
+    publicationDate: '2022-12-14T10:12:16',
+    type: 'Book',
+  },
+  {
+    id: 633,
+    title: 'Friendly Guide to Software Development',
+    publisherId: 632,
+    publicationDate: '2022-12-14T10:12:16',
+    type: 'Book',
+  },
+  {
+    id: 637,
+    title: 'Fundamentals of Software Architecture',
+    publisherId: 636,
+    publicationDate: '2020-02-11T00:00:00',
+    type: 'Book',
+  },
+  {
+    id: 640,
+    title: 'Beginning Software Engineering',
+    publisherId: 639,
+    publicationDate: '2022-12-14T10:12:16',
+    type: 'Book',
+  },
+  {
+    id: 643,
+    title: 'Righting Software',
+    publisherId: 642,
+    publicationDate: '2022-12-14T10:12:16',
+    type: 'Book',
+  }]
+
+export const documentReserved: Array<DocumentMetaModel> = [{
+  id: 648,
+  title: 'Java Software Solutions',
+  publisherId: 647,
+  publicationDate: '2017-02-20T00:00:00',
+  type: 'Book',
+},
+{
+  id: 651,
+  title: 'Python Crash Course, 2nd Edition',
+  publisherId: 650,
+  publicationDate: '2019-05-03T00:00:00',
+  type: 'Book',
+},
+{
+  id: 656,
+  title: 'Fluent Python',
+  publisherId: 655,
+  publicationDate: '2021-04-13T00:00:00',
+  type: 'Book',
+},
+{
+  id: 659,
+  title: 'Python for Data Analysis',
+  publisherId: 658,
+  publicationDate: '2022-10-04T00:00:00',
+  type: 'Book',
+},
+{
+  id: 663,
+  title: 'Python All-In-One for Dummies',
+  publisherId: 662,
+  publicationDate: '2022-12-14T10:12:16',
+  type: 'Book',
+},
+{
+  id: 666,
+  title: 'Think Python',
+  publisherId: 665,
+  publicationDate: '2022-12-14T10:12:16',
+  type: 'Book',
+},
+{
+  id: 669,
+  title: 'Python for Kids',
+  publisherId: 668,
+  publicationDate: '2022-12-14T10:12:16',
+  type: 'Book',
+},
+{
+  id: 672,
+  title: 'Python Programming for Beginners',
+  publisherId: 671,
+  publicationDate: '2022-12-14T10:12:16',
+  type: 'Book',
+},
+{
+  id: 675,
+  title: 'Head First Java',
+  publisherId: 674,
+  publicationDate: '2022-12-14T10:12:16',
+  type: 'Book',
+}]
