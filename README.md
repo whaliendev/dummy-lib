@@ -12,21 +12,19 @@ This project is a **semi-finished** course project, also a hands-on attempt with
 
 **Homepage**
 
-![homepage](/home/whalien/codebase/js/dummy-lib/doc/imgs/homepage.png)
+![homepage](./doc/imgs/homepage.png)
 
 **Login**
 
-![login](/home/whalien/codebase/js/dummy-lib/doc/imgs/login.png)
+![login](./doc/imgs/login.png)
 
 **Admin**
 
 *user-side:* 
-
-![image-20230108231715316](/home/whalien/codebase/js/dummy-lib/doc/imgs/user-borrowed.png)
+![image-20230108231715316](./doc/imgs/user-borrowed.png)
 
 *admin-side:* 
-
-![image-20230108233657427](/home/whalien/codebase/js/dummy-lib/doc/imgs/reader-admin.png)
+![image-20230108233657427](./doc/imgs/reader-admin.png)
 
 
 
