@@ -12,17 +12,21 @@ This project is a **semi-finished** course project, also a hands-on attempt with
 
 **Homepage**
 
-![image-20230108221525242](https://gallery-1259614029.cos.ap-chengdu.myqcloud.com/img/image-20230108221525242.png)
+![homepage](/home/whalien/codebase/js/dummy-lib/doc/imgs/homepage.png)
 
 **Login**
 
-![shadow](https://gallery-1259614029.cos.ap-chengdu.myqcloud.com/img/shadow.png)
+![login](/home/whalien/codebase/js/dummy-lib/doc/imgs/login.png)
 
 **Admin**
 
-![image-20230108231715316](https://gallery-1259614029.cos.ap-chengdu.myqcloud.com/img/image-20230108231715316.png)
+*user-side:* 
 
-![image-20230108231919774](https://gallery-1259614029.cos.ap-chengdu.myqcloud.com/img/image-20230108231919774.png)
+![image-20230108231715316](/home/whalien/codebase/js/dummy-lib/doc/imgs/user-borrowed.png)
+
+*admin-side:* 
+
+![image-20230108233657427](/home/whalien/codebase/js/dummy-lib/doc/imgs/reader-admin.png)
 
 
 
@@ -103,4 +107,4 @@ skip `git commit` hooks. In general, Don't do this! If you think one file should
 [Vue3](https://vuejs.org/guide/introduction.html)  
 [Pinia](https://pinia.vuejs.org/)  
 [Vue Router](https://router.vuejs.org/)  
-[electron](https://www.electronjs.org/docs/latest)
+[Electron](https://www.electronjs.org/docs/latest)
