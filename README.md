@@ -1,6 +1,38 @@
 <h2 align="center"> dummy-lib </h2>
 
-### Layout
+<p align="center">A vue3 web app wrapped with electron. </p>
+
+### Note
+
+This project is a **semi-finished** course project, also a hands-on attempt with Electron and Vue3.  However, we have handed in our homework, it may not get any further development or maintenance.
+
+
+
+### Preview
+
+**Homepage**
+
+![image-20230108221525242](https://gallery-1259614029.cos.ap-chengdu.myqcloud.com/img/image-20230108221525242.png)
+
+**Login**
+
+![shadow](https://gallery-1259614029.cos.ap-chengdu.myqcloud.com/img/shadow.png)
+
+**Admin**
+
+![image-20230108231715316](https://gallery-1259614029.cos.ap-chengdu.myqcloud.com/img/image-20230108231715316.png)
+
+![image-20230108231919774](https://gallery-1259614029.cos.ap-chengdu.myqcloud.com/img/image-20230108231919774.png)
+
+
+
+### Develop
+
+#### Tech Stack
+
+Electron + Vue3 + Typescript + T-Design
+
+#### Project Layout
 
 ```text
 .
@@ -38,9 +70,9 @@
 | `vite.config.json`             | vite config file                           |
 | `yarn.lock`                    | pin the version of deps                    |
 
-### Getting Started
+#### Getting Started
 
-#### Available Scripts
+##### Available Scripts
 
 In this project directory, you can run:  
 `yarn`  
@@ -64,7 +96,9 @@ fix the errors and warnings reported by eslint. Typically, you don't need to cal
 `git commit --no-verify`  
 skip `git commit` hooks. In general, Don't do this! If you think one file should not be linted, just ignore it in `.eslintignore`.
 
-#### Userful Resources
+
+
+### Userful Resources
 
 [Vue3](https://vuejs.org/guide/introduction.html)  
 [Pinia](https://pinia.vuejs.org/)  
