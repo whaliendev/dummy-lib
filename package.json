@@ -22,7 +22,7 @@
     "pinia-plugin-persistedstate": "^3.0.1",
     "qs": "^6.11.0",
     "tdesign-icons-vue-next": "^0.1.6",
-    "tdesign-vue-next": "^0.25.0",
+    "tdesign-vue-next": "^1.0.5",
     "vue-router": "4"
   },
   "devDependencies": {
